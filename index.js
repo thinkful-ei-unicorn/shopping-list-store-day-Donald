@@ -1,11 +1,12 @@
 const store = {
   items: [
-    { id: cuid(), name: 'apples', checked: false },
-    { id: cuid(), name: 'oranges', checked: false },
-    { id: cuid(), name: 'milk', checked: true },
-    { id: cuid(), name: 'bread', checked: false }
+    { id: cuid(), name: 'apples', checked: false},
+    { id: cuid(), name: 'oranges', checked: false},
+    { id: cuid(), name: 'milk', checked: true},
+    { id: cuid(), name: 'bread', checked: false}
   ],
-  hideCheckedItems: false
+  hideCheckedItems: false,
+  
 };
 
 const generateItemElement = function (item) {
@@ -17,14 +18,25 @@ const generateItemElement = function (item) {
   }
 
   return `
+ 
     <li class='js-item-element' data-item-id='${item.id}'>
       ${itemTitle}
+  <form id="js-shopping-list-form">
+      <label for="shopping-list-entry"></label>
+      <input type="text" name="shopping-list-entry" class="js-shopping-list-entry" placeholder="change item name">
+  </form>
       <div class='shopping-item-controls'>
         <button class='shopping-item-toggle js-item-toggle'>
           <span class='button-label'>check</span>
         </button>
         <button class='shopping-item-delete js-item-delete'>
           <span class='button-label'>delete</span>
+        </button>
+        <button class='shopping-item-edit js-item-edit'>
+          <span class='button-label'>edit</span>
+        </button>
+        <button class='shopping-item-change js-item-change'>
+          <span class='button-label'>change</span>
         </button>
       </div>
     </li>`;
@@ -89,11 +101,27 @@ const handleItemCheckClicked = function () {
   });
 };
 
+
 const getItemIdFromElement = function (item) {
   return $(item)
     .closest('.js-item-element')
     .data('item-id');
 };
+//function for edit itmes
+const removeItemName = function(){
+ const removeItem = deleteListItem()
+}
+ const changeItemName = function(){
+ const changeName = addItemToShoppingList()
+ 
+}
+ const handleRemoveItem = function () {
+  $('.js-shopping-list').on('click', '.js-item-edit', event =>{
+    const id = getItemIdFromElement(event.currentTarget);
+   deleteListItem(id);
+    render();
+  })
+}
 
 /**
  * Responsible for deleting a list item.
@@ -160,6 +188,7 @@ const handleShoppingList = function () {
   handleItemCheckClicked();
   handleDeleteItemClicked();
   handleToggleFilterClick();
+  handleRemoveItem()
 };
 
 // when the page loads, call `handleShoppingList`
